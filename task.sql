@@ -1,14 +1,17 @@
-USE ShopDB; 
+DROP DATABASE IF EXISTS ShopDB;
+CREATE DATABASE ShopDB;
+USE ShopDB;
 -- Він повинен повернути таблицю зі списком назв продуктів, а також їх кількістю на складі.
 DELIMITER //
 CREATE PROCEDURE get_warehouse_product_inventory(
     IN warehouse_id INT
 )
 BEGIN
-    SELECT Name,
-           WarehouseAmount
+    SELECT Products.Name,
+           ProductInventory.WarehouseAmount
     FROM Products
         INNER JOIN ProductInventory
-            ON WarehouseID = warehouse_id;
+            ON ProductInventory.ProductID = Products.ID
+            AND ProductInventory.WarehouseID = warehouse_id;
 END //
 DELIMITER ;
